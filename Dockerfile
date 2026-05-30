@@ -38,6 +38,6 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.d/supervisor.ini"]
 # Berikan izin eksekusi pada script entrypoint
 RUN chmod +x /var/www/html/entrypoint.sh
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["/var/www/html/entrypoint.sh"]
