@@ -16,7 +16,6 @@
 
 # Docker Files (Tidak perlu dicopy ke dalam container itu sendiri)
 Dockerfile
-.docker
 .dockerignore
 
 # Laravel Logs, Cache, & Storage Lokal
