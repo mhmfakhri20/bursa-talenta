@@ -1,0 +1,35 @@
+# Git & Vendor
+.git
+.github
+/vendor
+
+# Node / Frontend Dependencies (Sudah di-build di lokal)
+/node_modules
+/npm-debug.log
+
+# Konfigurasi Lokal & Rahasia (Sangat Penting!)
+.env
+.env.backup
+.env.production
+.env.development
+.env.local
+
+# Docker Files (Tidak perlu dicopy ke dalam container itu sendiri)
+Dockerfile
+.docker
+.dockerignore
+
+# Laravel Logs, Cache, & Storage Lokal
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*.log
+/storage/app/public/*
+
+# File bawaan OS / IDE
+.DS_Store
+Thumbs.db
+/.idea
+/.vscode
+.phpunit.result.cache
