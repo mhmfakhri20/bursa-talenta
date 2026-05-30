@@ -13,6 +13,10 @@ RUN apk add --no-cache \
 
 RUN docker-php-ext-install pdo_mysql bcmath
 
+# 🔴 TAMBAHKAN BARIS INI (Buat folder runtime untuk Unix Socket & berikan izin akses)
+RUN mkdir -p /run/nginx /var/log/nginx \
+    && chown -R www-data:www-data /run /var/log/nginx
+
 # Configure Nginx & Supervisor
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 COPY .docker/supervisor.ini /etc/supervisor.d/supervisor.ini
