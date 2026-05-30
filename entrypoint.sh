@@ -8,5 +8,5 @@ php artisan view:clear
 # Jalankan Database Migration
 php artisan migrate --force
 
-# Nyalakan Web Server (Nginx & PHP-FPM via Supervisor)
-exec /usr/bin/supervisord -c /etc/supervisor.d/supervisor.ini
+# Paksa Laravel jalan langsung di port 8080 tanpa Nginx
+exec php artisan serve --host=0.0.0.0 --port=8080
