@@ -38,6 +38,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Berikan izin eksekusi pada script entrypoint
 RUN chmod +x /var/www/html/entrypoint.sh
 
+ENV PORT=8080
+
 # Buka port 8080 untuk Railway
 EXPOSE 8080
 
