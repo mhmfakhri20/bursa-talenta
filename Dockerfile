@@ -34,3 +34,10 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.d/supervisor.ini"]
+
+# Berikan izin eksekusi pada script entrypoint
+RUN chmod +x /var/www/html/entrypoint.sh
+
+EXPOSE 80
+
+ENTRYPOINT ["/var/www/html/entrypoint.sh"]
