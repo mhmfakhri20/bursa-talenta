@@ -13,6 +13,10 @@ RUN apk add --no-cache \
 
 RUN docker-php-ext-install pdo_mysql bcmath
 
+# 🔴 TAMBAHKAN BARIS INI (Paksa PHP-FPM mendengarkan port 9000 secara global)
+RUN sed -i 's/listen = \/html\/run\/php-fpm.sock/listen = 9000/g' /usr/local/etc/php-fpm.d/zz-docker.conf || true \
+    && sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /usr/local/etc/php-fpm.d/www.conf || true
+
 # Configure Nginx & Supervisor
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 COPY .docker/supervisor.ini /etc/supervisor.d/supervisor.ini
