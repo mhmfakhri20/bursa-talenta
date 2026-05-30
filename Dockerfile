@@ -7,7 +7,9 @@ RUN apk add --no-cache \
     libpng-dev \
     libxml2-dev \
     oniguruma-dev \
-    linux-headers
+    linux-headers \
+    nodejs \
+    npm
 
 RUN docker-php-ext-install pdo_mysql bcmath
 
@@ -19,7 +21,13 @@ COPY composer.json composer.lock ./
 
 RUN composer install --no-dev --no-scripts --optimize-autoloader
 
+COPY package.json package-lock.json* vite.config.js ./
+
+RUN npm install
+
 COPY . .
+
+RUN npm run build
 
 RUN composer dump-autoload --optimize \
     && php artisan package:discover --ansi \
@@ -29,4 +37,4 @@ ENV PORT=8080
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "echo '=== STARTING LARAVEL ON RAILWAY ===' && echo PORT=$PORT && php -v && php artisan --version && php artisan config:clear && php artisan route:clear && php artisan view:clear && echo '=== RUNNING MIGRATIONS ===' && php artisan migrate --force && echo '=== RUNNING SERVER NOW ===' && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+CMD ["sh", "-c", "echo '=== STARTING LARAVEL ON RAILWAY ===' && echo PORT=$PORT && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
