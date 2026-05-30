@@ -13,10 +13,6 @@ RUN apk add --no-cache \
 
 RUN docker-php-ext-install pdo_mysql bcmath
 
-# 🔴 TAMBAHKAN BARIS INI (Paksa PHP-FPM mendengarkan port 9000 secara global)
-RUN sed -i 's/listen = \/html\/run\/php-fpm.sock/listen = 9000/g' /usr/local/etc/php-fpm.d/zz-docker.conf || true \
-    && sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /usr/local/etc/php-fpm.d/www.conf || true
-
 # Configure Nginx & Supervisor
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 COPY .docker/supervisor.ini /etc/supervisor.d/supervisor.ini
@@ -35,13 +31,11 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-EXPOSE 80
-
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.d/supervisor.ini"]
-
 # Berikan izin eksekusi pada script entrypoint
 RUN chmod +x /var/www/html/entrypoint.sh
 
+# Buka port 8080 untuk Railway
 EXPOSE 8080
 
+# Jalankan script entrypoint untuk handle cache, migrasi, dan start server
 ENTRYPOINT ["/var/www/html/entrypoint.sh"]
